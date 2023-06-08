@@ -1,4 +1,3 @@
-import { useTransition } from "@react-spring/web";
 import { FieldHookConfig, useField } from "formik";
 import { ClassAttributes, InputHTMLAttributes } from "react";
 // CustomInput prop types
@@ -10,12 +9,7 @@ export default function CustomInput({ label, ...props }: Props) {
   const [field, meta] = useField(props);
   // field error
   const fieldError = meta.touched && meta.error;
-  // fade in and out errors as they enter and leave
-  const errorAnimations = useTransition(fieldError, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
+
   return (
     <div className="w-full flex flex-col  py-1 ">
       <label htmlFor={props.id} className="font-bold capitalize md:text-lg">

@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-// user login schema
-export const LoginUserSchema = z.object({
+// general user input validation  schema
+export const UserInputValidationSchema = z.object({
+  name: z.string({ required_error: "Name is required" }),
   email: z
     .string({
       required_error: "Email is required",
@@ -12,18 +13,19 @@ export const LoginUserSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Password must be 6 characters or more" }),
+  confirmPassword: z.string(),
 });
 
-// user registration schema that intersects with login schema
-// provides additional properties such as name and confirm password
-// checks if passwords match through refine function and displays the error in confirmPassword field
-export const RegisterUserSchema = LoginUserSchema.merge(
-  // add name and confirmPassword
-  z.object({
-    name: z.string({ required_error: "Name is required" }),
-    confirmPassword: z.string(),
-  })
-).refine(
+// user login schema
+// picks only email and password property from UserInputValidationSchema
+export const LoginUserSchema = UserInputValidationSchema.pick({
+  email: true,
+  password: true,
+});
+
+// user registration schema
+// copy of UserInputValidationSchema
+export const RegisterUserSchema = UserInputValidationSchema.refine(
   // check if passwords match then return error message
   ({ password, confirmPassword }) => password === confirmPassword,
   {

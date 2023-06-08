@@ -8,7 +8,7 @@ type formType = "login" | "register";
 
 export default function AuthForm() {
   // keep track of which form is currently displayed
-  const [currentForm, setcurrentForm] = useState<formType>("register");
+  const [currentForm, setcurrentForm] = useState<formType>("login");
   // check if current form is login form
   const isLoginForm = currentForm === "login";
 

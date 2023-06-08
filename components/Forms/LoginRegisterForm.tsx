@@ -1,5 +1,9 @@
 import { inputFields } from "@/common/exportedData";
-import { LoginUserSchema, RegisterUserSchema } from "@/zod/validationSchema";
+import {
+  LoginUserSchema,
+  RegisterUserSchema,
+  UserInputValidationSchema,
+} from "@/zod/validationSchema";
 import { Formik, FormikValues, Form } from "formik";
 import { useCallback, useMemo } from "react";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -7,42 +11,23 @@ import CustomInput from "./CustomInput";
 import CustomButton from "../Button/CustomButton";
 import { z } from "zod";
 
-// login values types
-// infered from LoginUserSchema
-type loginValuesType = z.infer<typeof LoginUserSchema>;
+// user input value types inferred from UserInputValidationSchema
+type UserInputTypes = z.infer<typeof UserInputValidationSchema>;
 
-// login form initial values
-const loginInitialValues: loginValuesType = {
+// initial values
+const initialValues: UserInputTypes = {
+  name: "",
   email: "",
   password: "",
-};
-
-// register values types
-// infered from RegisterUserSchema
-type registerValuesType = z.infer<typeof RegisterUserSchema>;
-
-// Registration form initial values
-// spreads login initialValues
-const registerInitialValues: registerValuesType = {
-  ...loginInitialValues,
-  name: "",
   confirmPassword: "",
 };
-
 export default function LoginRegisterForm({
   isLoginForm,
 }: {
   isLoginForm: boolean;
 }) {
-  // show initial value  based on current form
-  // useMemo to prevent unnecessary recreation of the initial values
-  const initialValues = useMemo(
-    () => (isLoginForm ? loginInitialValues : registerInitialValues),
-    [isLoginForm]
-  );
-
   // Validation schema using zod-formik-adapater
-  // schema  depends on current from
+  // schema  depends on current form
   const validationSchema = useMemo(
     () =>
       toFormikValidationSchema(
