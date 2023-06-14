@@ -1,4 +1,6 @@
+"use client";
 import { inputFields } from "@/common/exportedData";
+import { signIn } from "next-auth/react";
 import {
   LoginUserSchema,
   RegisterUserSchema,
@@ -10,6 +12,8 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import CustomInput from "./CustomInput";
 import CustomButton from "../Button/CustomButton";
 import { z } from "zod";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 // user input value types inferred from UserInputValidationSchema
 type UserInputTypes = z.infer<typeof UserInputValidationSchema>;
@@ -38,8 +42,35 @@ export default function LoginRegisterForm({
 
   // create onSubmit handler
   const onSubmit = useCallback(
-    (values: FormikValues) => {
-      console.log("isLoginForm", isLoginForm, values);
+    async (values: FormikValues) => {
+      const { name, email, password } = values;
+      // Register user
+      if (isLoginForm) {
+        // login user
+        const result = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+        if (result?.error) {
+          toast.error(`Login failed! ${result.error}`);
+        } else {
+          toast.success(`Logged in successfully!`);
+        }
+      } else {
+        //register user
+        try {
+          await axios.post("/api/register", {
+            name,
+            email,
+            password,
+          });
+          toast.success(`Account for ${name} created successfully!`);
+        } catch (error: any) {
+          // console.log(error);
+          toast.error(error.response.data);
+        }
+      }
     },
     [isLoginForm]
   );
