@@ -1,5 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import AuthContext from "@/components/AuthContext/AuthContext";
 
 export const metadata = {
   title: "Messenger - Let's chat!",
@@ -14,8 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster /> {/** for notifications */}
-        {children}
+        <AuthContext>
+          <Toaster /> {/** for notifications */}
+          {children}
+        </AuthContext>
       </body>
     </html>
   );

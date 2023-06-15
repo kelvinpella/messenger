@@ -1,12 +1,17 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import LoginRegisterForm from "./LoginRegisterForm";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 // type of current form
 type formType = "login" | "register";
 
 export default function AuthForm() {
+  // get session
+  const { status } = useSession();
+  const router = useRouter();
   // keep track of which form is currently displayed
   const [currentForm, setcurrentForm] = useState<formType>("login");
   // check if current form is login form
@@ -32,6 +37,12 @@ export default function AuthForm() {
     ],
     [isLoginForm]
   );
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/users");
+    }
+  }, [status, router]);
 
   return (
     <div className="p-2  w-full">

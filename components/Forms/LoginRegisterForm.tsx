@@ -14,6 +14,7 @@ import CustomButton from "../Button/CustomButton";
 import { z } from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 // user input value types inferred from UserInputValidationSchema
 type UserInputTypes = z.infer<typeof UserInputValidationSchema>;
@@ -30,6 +31,7 @@ export default function LoginRegisterForm({
 }: {
   isLoginForm: boolean;
 }) {
+  const router = useRouter();
   // Validation schema using zod-formik-adapater
   // schema  depends on current form
   const validationSchema = useMemo(
@@ -55,6 +57,7 @@ export default function LoginRegisterForm({
         if (result?.error) {
           toast.error(`Login failed! ${result.error}`);
         } else {
+          router.push("/users");
           toast.success(`Logged in successfully!`);
         }
       } else {
@@ -65,6 +68,8 @@ export default function LoginRegisterForm({
             email,
             password,
           });
+          // sign in after successful registration
+          await signIn("credentials", { email, password });
           toast.success(`Account for ${name} created successfully!`);
         } catch (error: any) {
           // console.log(error);
