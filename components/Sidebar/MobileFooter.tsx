@@ -8,7 +8,7 @@ export default function MobileFooter() {
   const { isOpen } = useConversation();
   if (isOpen) return null;
   return (
-    <div className="fixed justify-between w-full bottom-0 z-40 flex items-center bg-white border-t-[1px]">
+    <div className="fixed justify-between w-full lg:hidden bottom-0 z-40 flex items-center bg-white border-t-[1px]">
       {routes.map((item) => (
         <MobileItem
           key={item.label}
