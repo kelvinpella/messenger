@@ -6,9 +6,10 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ConversationBox from "./ConversationBox";
+import { FullConversationType } from "@/typings";
 
 interface ConversationListProps {
-  initialItems: Conversation[];
+  initialItems: FullConversationType[];
 }
 export default function ConversationList({
   initialItems,
@@ -33,8 +34,8 @@ export default function ConversationList({
         {items.map((item) => (
           <ConversationBox
             key={item.id}
-            // data={item}
-            // selected={conversationId === item.id}
+            data={item}
+            selected={conversationId === item.id}
           />
         ))}
       </div>
