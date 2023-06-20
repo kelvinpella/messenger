@@ -1,4 +1,4 @@
-import { Conversation, User } from "@prisma/client";
+import { Conversation, Message, User } from "@prisma/client";
 
 // input field property types
 export type Input = {
@@ -10,7 +10,7 @@ export type Input = {
   autoComplete?: string;
 };
 
-export type FullMessageType = {
+export type FullMessageType = Message & {
   sender: User;
   seen: User[];
 };

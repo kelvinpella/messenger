@@ -14,5 +14,5 @@ export default function useOtherUser(
     );
     return otherUser;
   }, [conversation.users, session?.data?.user?.email]);
-  return otherUser;
+  return otherUser[0];
 }
