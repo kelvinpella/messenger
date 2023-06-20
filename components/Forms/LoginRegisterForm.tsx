@@ -77,7 +77,7 @@ export default function LoginRegisterForm({
         }
       }
     },
-    [isLoginForm]
+    [isLoginForm, router]
   );
 
   return (

@@ -33,3 +33,8 @@ export const RegisterUserSchema = UserInputValidationSchema.refine(
     path: ["confirmPassword"],
   }
 );
+
+// message form
+export const MessageFormSchema = z.object({
+  message: z.string(),
+});
