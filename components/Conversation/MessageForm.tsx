@@ -8,6 +8,7 @@ import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import CustomInput from "../Forms/CustomInput";
 import axios from "axios";
+import { CldUploadButton } from "next-cloudinary";
 // message form value type
 type MessageValueType = z.infer<typeof MessageFormSchema>;
 const initialValues: MessageValueType = {
@@ -18,14 +19,26 @@ const validationSchema = toFormikValidationSchema(MessageFormSchema);
 export default function MessageForm() {
   const { conversationId } = useConversation();
   const onSubmit = (values: FormikValues) => {
-    axios.post("/api/message", {
+    axios.post("/api/messages", {
       ...values,
+      conversationId,
+    });
+  };
+  const handleImageUpload = (result: any) => {
+    axios.post("/api/messages", {
+      image: result?.info?.secure_url,
       conversationId,
     });
   };
   return (
     <div className="py-4 px-4 bg-white border-t flex items-center gap-2 lg:gap-4 w-full">
-      <HiPhoto size={30} className=" text-sky-500" />
+      <CldUploadButton
+        options={{ maxFiles: 1 }}
+        onUpload={handleImageUpload}
+        uploadPreset="e1ot5r9e"
+      >
+        <HiPhoto size={30} className=" text-sky-500" />
+      </CldUploadButton>{" "}
       <Formik
         onSubmit={onSubmit}
         initialValues={initialValues}
