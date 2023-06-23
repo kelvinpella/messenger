@@ -3,7 +3,7 @@ import { User } from "@prisma/client";
 import Modal from "../Modal/Modal";
 import { Field, Form, Formik, FormikValues } from "formik";
 import getCurrentUser from "@/actions/getCurrentUser";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { SettingsSchema } from "@/zod/validationSchema";
 import { z } from "zod";
 import placeholderProfileImage from "@/public/images/placeholder.png";
@@ -12,6 +12,9 @@ import CustomInput from "../Forms/CustomInput";
 import ProfileImagePreview from "../Forms/ProfileImagePreview";
 import CustomImageField from "../Forms/CustomImageField";
 import CustomButton from "../Button/CustomButton";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -21,15 +24,13 @@ interface SettingsModalProps {
 type InitialValueType = z.infer<typeof SettingsSchema>;
 
 const validationSchema = toFormikValidationSchema(SettingsSchema);
-const onSubmit = (values: FormikValues) => {
-  console.log(values); // TODO api
-};
 export default function SettingsModal({
   isOpen,
   onClose,
   currentUser,
 }: SettingsModalProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const initialValues: InitialValueType = useMemo(
     () => ({
       name: currentUser?.name ?? "",
@@ -38,6 +39,19 @@ export default function SettingsModal({
     [currentUser]
   );
 
+  const onSubmit = useCallback(
+    (values: FormikValues) => {
+      axios
+        .post("/api/settings", { ...values })
+        .then(() => {
+          router.refresh();
+          onClose();
+        })
+        .catch(() => toast.error("Something went wrong"))
+        .finally(() => setIsLoading(false));
+    },
+    [router, onClose]
+  );
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Formik
