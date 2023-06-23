@@ -38,3 +38,10 @@ export const RegisterUserSchema = UserInputValidationSchema.refine(
 export const MessageFormSchema = z.object({
   message: z.string(),
 });
+
+// settings schema
+
+export const SettingsSchema = z.object({
+  name: z.string({ required_error: "Name is required!" }),
+  image: z.any(),
+});

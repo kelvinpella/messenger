@@ -64,7 +64,7 @@ export default function ConfirmModal({ isOpen, onClose }: ConfirmModalProps) {
           disabled={isLoading}
           type="button"
           text="Cancel"
-          variant="secondary"
+          variant="neutral"
         />
       </div>
     </Modal>

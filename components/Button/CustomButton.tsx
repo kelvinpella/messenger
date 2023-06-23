@@ -9,7 +9,7 @@ type Props = {
   onClick?: () => void;
 };
 export default function CustomButton({
-  variant,
+  variant = "primary",
   text,
   onClick,
   type,
@@ -22,10 +22,11 @@ export default function CustomButton({
       value={text}
       disabled={disabled}
       className={clsx(
-        "my-4 py-2 px-2.5 w-full  rounded-md text-white md:text-lg cursor-pointer",
-        variant === "danger"
-          ? "bg-red-500 hover:bg-red-600"
-          : "bg-purple-600 hover:bg-purple-700"
+        "my-4 py-2 px-2.5 w-full capitalize font-bold rounded-md  md:text-lg cursor-pointer",
+        variant === "primary" && "bg-purple-600 hover:bg-purple-700",
+        variant === "danger" && "bg-red-500 hover:bg-red-600",
+        variant === "neutral" && "bg-gray-200 hover:bg-gray-100 text-black",
+        variant !== "neutral" ? "text-white" : "text-black"
       )}
     ></input>
   );
