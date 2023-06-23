@@ -1,34 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Messaging App
 
-## Getting Started
+A messaging app built using TypeScript, Next.js, Headless UI, Tailwind CSS, and Pusher.
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+The Messaging App is a real-time messaging application inspired by Facebook Messenger. It allows users to send and receive messages in real-time, creating a seamless and interactive communication experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Real-time messaging: Users can send and receive messages instantly, without the need to refresh the page.
+- User-friendly interface: The app provides an intuitive and responsive user interface for a smooth messaging experience.
+- Message notifications: Users receive notifications for new messages to stay updated with the conversation.
+- Typing indicator: The app shows a typing indicator when someone is actively typing a message.
+- Emojis and attachments: Users can express themselves using emojis and share attachments like images or files.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tech Stack
 
-## Learn More
+The app is built using the following technologies:
 
-To learn more about Next.js, take a look at the following resources:
+- TypeScript: A statically typed superset of JavaScript that enhances developer productivity and code maintainability.
+- Next.js: A React framework for building server-rendered and statically generated applications.
+- Headless UI: An open-source library for building accessible and customizable UI components.
+- Tailwind CSS: A utility-first CSS framework that enables rapid UI development with pre-built styles and classes.
+- Pusher: A cloud-based service for handling real-time communication, allowing seamless data synchronization between clients.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
