@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { User } from "@prisma/client";
 
 // general user input validation  schema
 export const UserInputValidationSchema = z.object({
@@ -44,4 +45,12 @@ export const MessageFormSchema = z.object({
 export const SettingsSchema = z.object({
   name: z.string({ required_error: "Name is required!" }),
   image: z.any(),
+});
+
+// group chat schema
+export const GroupChatSchema = z.object({
+  name: z.string({ required_error: "Group name is required!" }),
+  members: z.record(z.string(), z.string()).array().min(2, {
+    message: "Group must contain at least 3 members, including you!",
+  }),
 });
