@@ -2,7 +2,7 @@
 
 import useConversation from "@/common/hooks/useConversation";
 import { MessageFormSchema } from "@/zod/validationSchema";
-import { Formik, Form, FormikValues } from "formik";
+import { Formik, Form, FormikValues, FormikHelpers } from "formik";
 import { HiPaperAirplane, HiPhoto } from "react-icons/hi2";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -18,11 +18,15 @@ const validationSchema = toFormikValidationSchema(MessageFormSchema);
 
 export default function MessageForm() {
   const { conversationId } = useConversation();
-  const onSubmit = (values: FormikValues) => {
-    axios.post("/api/messages", {
+  const onSubmit = async (
+    values: FormikValues,
+    { resetForm }: FormikHelpers<MessageValueType>
+  ) => {
+    await axios.post("/api/messages", {
       ...values,
       conversationId,
     });
+    resetForm();
   };
   const handleImageUpload = (result: any) => {
     axios.post("/api/messages", {

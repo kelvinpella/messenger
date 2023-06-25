@@ -7,16 +7,21 @@ import { HiChevronLeft, HiEllipsisHorizontal } from "react-icons/hi2";
 import Avatar from "../Avatar/Avatar";
 import ProfileDrawer from "./ProfileDrawer";
 import AvatarGroup from "../Avatar/AvatarGroup";
+import useActiveList from "@/common/hooks/useActiveList";
+import { isValid } from "date-fns";
 interface HeaderProps {
   conversation: Conversation & { users: User[] };
 }
 export const Header = ({ conversation }: HeaderProps) => {
   const otherUser = useOtherUser(conversation);
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
   const [drawarOpen, setDrawerOpen] = useState(false);
   const statusText = useMemo(() => {
     if (conversation.isGroup) return `${conversation.users.length} members`;
-    return "Active";
-  }, [conversation]);
+    return isActive ? "Active" : "Offline";
+  }, [conversation, isActive]);
 
   return (
     <>
