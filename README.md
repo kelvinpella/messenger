@@ -1,6 +1,6 @@
-# Messaging App
+# Messaging App: View [website here](https://messenger-me.vercel.app/)
 
-A messaging app built using TypeScript, Next.js, Headless UI, Tailwind CSS, and Pusher.
+## Learning chat technologies by building this project
 
 ## Description
 
